@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexMotors — Car Management & Fleet System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span class="logo-text">ApexMotors</span>
+                </div>
+                <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-target="dashboard-view">
+                        <a href="#dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+                    </li>
+                    <li class="nav-item" data-target="inventory-view">
+                        <a href="#inventory"><i class="fa-solid fa-car"></i><span>Car Inventory</span></a>
+                    </li>
+                    <li class="nav-item" data-target="customers-view">
+                        <a href="#customers"><i class="fa-solid fa-users"></i><span>Customers</span></a>
+                    </li>
+                    <li class="nav-item" data-target="rentals-view">
+                        <a href="#rentals"><i class="fa-solid fa-key"></i><span>Rentals</span></a>
+                    </li>
+                    <li class="nav-item" data-target="maintenance-view">
+                        <a href="#maintenance"><i class="fa-solid fa-screwdriver-wrench"></i><span>Maintenance</span></a>
+                    </li>
+                    <li class="nav-item" data-target="reports-view">
+                        <a href="#reports"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+                    </li>
+                    <li class="nav-item" data-target="settings-view">
+                        <a href="#settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-profile">
+                    <div class="avatar">AM</div>
+                    <div class="user-info">
+                        <h4 id="sidebarUserName">Admin Manager</h4>
+                        <p>Fleet Supervisor</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button id="mobileMenuToggle" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="globalSearchInput" placeholder="Search cars, customers, rentals...">
+                    </div>
+                </div>
+                <div class="navbar-right">
+                    <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <div class="dropdown notifications-dropdown">
+                        <button class="icon-btn notification-btn" id="notificationToggleBtn" title="Notifications">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="badge-count" id="notificationCount">3</span>
+                        </button>
+                        <div class="dropdown-menu notification-menu" id="notificationMenu">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <span class="mark-read">Mark all as read</span>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile-dropdown">
+                        <div class="avatar sm">AM</div>
+                        <span class="admin-name">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Views Container -->
+            <div class="view-container">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <section id="dashboard-view" class="app-view active">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h1>Welcome back, Fleet Manager! 👋</h1>
+                            <p>Here is what is happening with your automotive inventory and rentals today.</p>
+                        </div>
+                        <div class="welcome-actions">
+                            <button class="btn btn-primary" onclick="openModal('carModal')"><i class="fa-solid fa-plus"></i> Add New Car</button>
+                            <button class="btn btn-secondary" onclick="openModal('rentalModal')"><i class="fa-solid fa-key"></i> New Rental</button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-car-side"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-label">Total Cars</span>
+                                <h3 id="statTotalCars">0</h3>
+                                <span class="stat-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> Fleet active</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-label">Available Cars</span>
+                                <h3 id="statAvailableCars">0</h3>
+                                <span class="stat-trend positive">Ready for booking</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-key"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-label">Rented Cars</span>
+                                <h3 id="statRentedCars">0</h3>
+                                <span class="stat-trend neutral">On road</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon red"><i class="fa-solid fa-wrench"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-label">Maintenance</span>
+                                <h3 id="statMaintenanceCars">0</h3>
+                                <span class="stat-trend warning">In service</span>
+                            </div>
+                        </div>
+                        <div class="stat-card highlight">
+                            <div class="stat-icon purple"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                            <div class="stat
